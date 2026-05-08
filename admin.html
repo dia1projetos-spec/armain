@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Armain</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--navy); display:flex; align-items:center; justify-content:center; min-height:100vh; }
+    .admin-box { background: var(--beige); padding:3rem; width:min(420px,90%); text-align:center; }
+    .admin-box h1 { font-family:'Playfair Display',serif; color:var(--navy); margin:1rem 0; }
+    .admin-box input { width:100%; padding:.9rem; margin:.5rem 0; border:1px solid var(--beige-warm); background:white; }
+    .admin-box button { width:100%; margin-top:1rem; }
+    .logo-admin { height:45px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div class="admin-box">
+    <img src="assets/logo.png" class="logo-admin" style="filter:none;">
+    <h1>Área Administrativa</h1>
+    <p>Acceso para gestión de perfumes (Firebase)</p>
+    <form onsubmit="event.preventDefault(); alert('Conecta Firebase Auth aquí');">
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Contraseña" required>
+      <button class="btn btn-dark" type="submit">Ingresar</button>
+    </form>
+    <p style="margin-top:1.5rem; font-size:.85rem;"><a href="index.html" style="color:var(--navy);">← Volver al sitio</a></p>
+  </div>
+</body>
+</html>
