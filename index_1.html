@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Armain — Perfumería Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">ARMAIN</div>
+      <nav>
+        <a href="#categorias">Categorías</a>
+        <a href="#productos">Perfumes</a>
+        <a href="admin.html">Admin</a>
+        <button id="btn-carrito">Carrito (<span id="cart-count">0</span>)</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="slides" id="slides"></div>
+    <div class="hero-overlay">
+      <h1>Perfumería de Autor</h1>
+      <p>Esencias curadas, presentación premium. Envíos a toda Argentina.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section id="categorias" class="section">
+      <h2>Categorías</h2>
+      <div id="grid-categorias" class="grid-cat"></div>
+    </section>
+
+    <section id="productos" class="section">
+      <h2>Novedades</h2>
+      <div id="grid-productos" class="grid-prod"></div>
+    </section>
+  </main>
+
+  <aside id="carrito" class="carrito">
+    <div class="carrito-head">
+      <h3>Tu carrito</h3>
+      <button id="cerrar-carrito">×</button>
+    </div>
+    <div id="carrito-items"></div>
+    <div class="carrito-foot">
+      <div class="total">Total: <span id="cart-total">$0</span></div>
+      <button class="btn-primary" id="checkout">Finalizar compra</button>
+    </div>
+  </aside>
+
+  <footer>
+    <div class="container foot">
+      <div>© 2026 Armain — Córdoba, Argentina</div>
+      <div><a href="admin.html">Panel administrativo</a></div>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

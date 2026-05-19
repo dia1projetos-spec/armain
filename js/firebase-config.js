@@ -1,10 +1,10 @@
-// Reemplaza con tus datos de Firebase
+// Firebase Armain - configurado
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "1:XXXX:web:XXXX"
+  apiKey: "AIzaSyBxqTxgTiGrd1AK50fIZVHn_INJX9yKSDo",
+  authDomain: "armain-84b7d.firebaseapp.com",
+  projectId: "armain-84b7d",
+  storageBucket: "armain-84b7d.firebasestorage.app",
+  messagingSenderId: "351869434354",
+  appId: "1:351869434354:web:ddcb5329d7f4574e94136b"
 };
 firebase.initializeApp(firebaseConfig);
