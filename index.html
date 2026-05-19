@@ -1,145 +1,69 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armain — Fragancias de Autor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Armain — Perfumería Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css"/>
 </head>
 <body>
-    <!-- LOADER ELEGANTE CON LOGO -->
-    <div id="loader">
-        <div class="loader-bg"></div>
-        <div class="loader-content">
-            <div class="logo-wrap">
-                <img src="assets/logo-white.png" alt="Armain" class="loader-logo">
-                <div class="logo-glow"></div>
-            </div>
-            <div class="loader-line"><span></span></div>
-            <p class="loader-tag">FRAGANCIAS DE AUTOR · CÓRDOBA</p>
-        </div>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">ARMAIN</div>
+      <nav>
+        <a href="#categorias">Categorías</a>
+        <a href="#productos">Perfumes</a>
+        <a href="admin.html">Admin</a>
+        <button id="btn-carrito">Carrito (<span id="cart-count">0</span>)</button>
+      </nav>
     </div>
+  </header>
 
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav-logo">
-                <img src="assets/logo-white.png" alt="Armain">
-            </a>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#coleccion">Colección</a></li>
-                <li><a href="#atelier">Atelier</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li><a href="admin.html" class="admin-pill">Admin</a></li>
-            </ul>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span>
-            </button>
-        </nav>
-    </header>
+  <section class="hero">
+    <div class="slides" id="slides"></div>
+    <div class="hero-overlay">
+      <h1>Perfumería de Autor</h1>
+      <p>Esencias curadas, presentación premium. Envíos a toda Argentina.</p>
+    </div>
+  </section>
 
-    <main>
-    <!-- HERO -->
-    <section id="inicio" class="hero">
-        <div class="slider">
-            <div class="slide active">
-                <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=2400')"></div>
-                <div class="slide-inner container">
-                    <span class="kicker">Nuevo</span>
-                    <h1>Armain No.1 Marino</h1>
-                    <p>Bergamota de Calabria, sal marina patagónica y cedro azul. Silencioso, profundo, inolvidable.</p>
-                    <a href="#coleccion" class="btn-primary">Explorar la colección</a>
-                </div>
-            </div>
-            <div class="slide">
-                <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=2400')"></div>
-                <div class="slide-inner container">
-                    <span class="kicker">Atelier</span>
-                    <h1>Hecho en pequeños lotes</h1>
-                    <p>Diseño argentino con materias primas nobles. Azul profundo, beige cálido.</p>
-                    <a href="#atelier" class="btn-primary">Conocer el proceso</a>
-                </div>
-            </div>
-            <div class="slide">
-                <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=2400')"></div>
-                <div class="slide-inner container">
-                    <span class="kicker">Exclusivo</span>
-                    <h1>Lujo silencioso</h1>
-                    <p>Perfumes que no gritan. Susurran.</p>
-                    <a href="#contacto" class="btn-primary">Hablar con Armain</a>
-                </div>
-            </div>
-        </div>
-        <div class="slider-controls container">
-            <button class="slider-arrow prev" aria-label="Anterior">←</button>
-            <div class="slider-dots">
-                <button class="dot active" data-slide="0"></button>
-                <button class="dot" data-slide="1"></button>
-                <button class="dot" data-slide="2"></button>
-            </div>
-            <button class="slider-arrow next" aria-label="Siguiente">→</button>
-        </div>
+  <main class="container">
+    <section id="categorias" class="section">
+      <h2>Categorías</h2>
+      <div id="grid-categorias" class="grid-cat"></div>
     </section>
 
-    <!-- ATELIER -->
-    <section id="atelier" class="atelier">
-        <div class="container atelier-grid">
-            <div class="atelier-text reveal">
-                <span class="eyebrow">Nuestra esencia</span>
-                <h2>Diseño que respira Córdoba</h2>
-                <p>Armain nace en Río Primero con una obsesión: la proporción justa. Ni exceso ni ausencia. Trabajamos con un azul más profundo — <strong>#0A192F</strong>, inspirado en la noche serrana — y un beige cálido que recuerda al lino natural.</p>
-                <p>Cada fórmula madura 30 días. Cada frasco se numera a mano. No seguimos tendencias. Creamos memoria olfativa.</p>
-                <div class="signature">
-                    <img src="assets/logo.png" alt="Armain" style="height:28px; opacity:.7;">
-                </div>
-            </div>
-            <div class="atelier-visual reveal">
-                <div class="visual-card">
-                    <img src="https://images.unsplash.com/photo-1615529151169-7b1ff50dc7cf?q=80&w=1200" alt="Atelier Armain">
-                    <div class="visual-caption">Pequeños lotes · Materias nobles</div>
-                </div>
-            </div>
-        </div>
+    <section id="productos" class="section">
+      <h2>Novedades</h2>
+      <div id="grid-productos" class="grid-prod"></div>
     </section>
+  </main>
 
-    <!-- COLECCION -->
-    <section id="coleccion" class="collection">
-        <div class="container">
-            <div class="section-head reveal">
-                <span class="eyebrow">Colección 2026</span>
-                <h2>Galería de Perfumes</h2>
-            </div>
-            <div class="perfume-grid" id="perfumeGrid"></div>
-        </div>
-    </section>
+  <aside id="carrito" class="carrito">
+    <div class="carrito-head">
+      <h3>Tu carrito</h3>
+      <button id="cerrar-carrito">×</button>
+    </div>
+    <div id="carrito-items"></div>
+    <div class="carrito-foot">
+      <div class="total">Total: <span id="cart-total">$0</span></div>
+      <button class="btn-primary" id="checkout">Finalizar compra</button>
+    </div>
+  </aside>
 
-    <!-- CONTACTO -->
-    <section id="contacto" class="contact">
-        <div class="container contact-inner reveal">
-            <h2>¿Distribuidor o cliente privado?</h2>
-            <p>Escribinos desde Córdoba a todo el país. Respondemos en 24h.</p>
-            <a href="mailto:hola@armain.com.ar" class="btn-ghost">hola@armain.com.ar</a>
-        </div>
-    </section>
-    </main>
+  <footer>
+    <div class="container foot">
+      <div>© 2026 Armain — Córdoba, Argentina</div>
+      <div><a href="admin.html">Panel administrativo</a></div>
+    </div>
+  </footer>
 
-    <footer class="footer">
-        <div class="container footer-top">
-            <img src="assets/logo-white.png" alt="Armain" class="footer-logo">
-            <nav>
-                <a href="#inicio">Inicio</a>
-                <a href="#coleccion">Colección</a>
-                <a href="admin.html">Admin</a>
-            </nav>
-        </div>
-        <div class="footer-bottom">
-            © 2026 Armain Fragancias · Río Primero, Córdoba, Argentina
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
