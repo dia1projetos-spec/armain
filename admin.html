@@ -1,120 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="es-AR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin — Armain</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css"/>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administración - Armain</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-  <div id="login-screen">
-    <div class="login-bg"></div>
-    <div class="login-container">
-      <img src="assets/logo-gold.png" alt="Armain" class="login-logo"/>
-      <div class="login-card">
-        <div class="card-ornament">❦</div>
-        <h1>Administração Privée</h1>
-        <p class="subtitle">Acesse o painel administrativo da perfumeria</p>
-        <div class="sep"></div>
-        
-        <label class="field-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg> E-MAIL</label>
-        <div class="input-wrap">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-          <input id="email" type="email" placeholder="seu@email.com" autocomplete="email"/>
-        </div>
-
-        <label class="field-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SENHA</label>
-        <div class="input-wrap">
-          <input id="password" type="password" placeholder="Digite sua senha" autocomplete="current-password"/>
-          <button type="button" class="eye" id="togglePass" aria-label="Mostrar senha">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-
-        <div class="row-between">
-          <label class="remember"><input type="checkbox" id="remember"> <span>Lembrar-me</span></label>
-          <a href="#" class="forgot" onclick="alert('Recuperação via Firebase Console');return false;">Esqueceu sua senha?</a>
-        </div>
-
-        <button id="login" class="btn-gold">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          ENTRAR
-        </button>
-        <div class="sep"></div>
-      </div>
-      <div class="login-footer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C5A572"><path d="M8 11V7a4 4 0 1 1 8 0v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg>
-        PAINEL ADMINISTRATIVO EXCLUSIVO
-      </div>
-    </div>
+<div id="login-screen" class="login-wrapper">
+  <div class="login-card">
+    <div class="crown">♛</div>
+    <h1>Administración Privée</h1>
+    <form id="login-form">
+      <div class="input-wrap"><span>✉</span><input type="email" id="email" placeholder="Correo electrónico" required></div>
+      <div class="input-wrap"><span>🔒</span><input type="password" id="password" placeholder="Contraseña" required><button type="button" id="toggle">👁</button></div>
+      <div class="opts"><label><input type="checkbox" id="remember"> Recordarme</label><a href="#">¿Olvidaste tu contraseña?</a></div>
+      <button class="btn-gold" type="submit">ENTRAR</button>
+    </form>
+    <p class="foot">PANEL ADMINISTRATIVO EXCLUSIVO</p>
   </div>
-
-  <div class="admin-layout" id="admin-app" style="display:none">
-    <aside class="sidebar">
-      <h1>ARMAIN</h1>
-      <nav>
-        <button data-tab="slides" class="active">Slides</button>
-        <button data-tab="categorias">Categorías</button>
-        <button data-tab="productos">Productos</button>
-        <button data-tab="admins">Administradores</button>
-      </nav>
-      <button id="logout" class="logout">Salir</button>
-    </aside>
-    <main class="content">
-      <div id="panel">
-        <section id="tab-slides" class="tab">
-          <h2>Slides del header</h2>
-          <div class="upload-row">
-            <input type="file" id="slide-file" accept="image/*"/>
-            <button id="upload-slide">Subir a Cloudinary</button>
-          </div>
-          <div id="slides-list" class="list"></div>
-        </section>
-        <section id="tab-categorias" class="tab" style="display:none">
-          <h2>Categorías</h2>
-          <div class="form-grid">
-            <input id="cat-nombre" placeholder="Nombre"/>
-            <input id="cat-desc" placeholder="Descripción corta"/>
-          </div>
-          <button id="add-cat">Agregar</button>
-          <div id="cats-list" class="list"></div>
-        </section>
-        <section id="tab-productos" class="tab" style="display:none">
-          <h2>Productos</h2>
-          <div class="form-grid">
-            <input id="prod-nombre" placeholder="Nombre"/>
-            <input id="prod-marca" placeholder="Marca"/>
-            <input id="prod-precio" type="number" placeholder="Precio ARS"/>
-            <select id="prod-cat"></select>
-            <input id="prod-imagen-file" type="file" accept="image/*"/>
-            <textarea id="prod-desc" placeholder="Descripción premium (SEO)"></textarea>
-            <input id="prod-notas" placeholder="Notas separadas por coma"/>
-          </div>
-          <button id="add-prod">Guardar producto</button>
-          <div id="prods-list" class="list"></div>
-        </section>
-        <section id="tab-admins" class="tab" style="display:none">
-          <h2>Administradores</h2>
-          <input id="new-admin-email" placeholder="Email nuevo admin"/>
-          <input id="new-admin-pass" type="password" placeholder="Contraseña temporal"/>
-          <button id="add-admin">Crear administrador</button>
-          <p class="hint">Requiere Cloud Function para crear usuarios. Por ahora use Firebase Console.</p>
-        </section>
-      </div>
-    </main>
-  </div>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
-  <script src="js/admin.js"></script>
-  <script>
-    document.getElementById('togglePass')?.addEventListener('click', ()=>{
-      const p = document.getElementById('password');
-      p.type = p.type === 'password' ? 'text' : 'password';
-    });
-  </script>
+</div>
+<div id="admin-panel" class="admin" style="display:none">
+  <aside class="sidebar">
+    <div class="brand">Armain</div>
+    <nav><button data-tab="slides" class="active">Slides</button><button data-tab="categorias">Categorías</button><button data-tab="productos">Productos</button></nav>
+    <button id="logout" class="logout">Salir</button>
+  </aside>
+  <main class="main"><div id="tab-content"></div></main>
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>
