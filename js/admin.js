@@ -1,104 +1,23 @@
 const auth = firebase.auth();
 const db = firebase.firestore();
-
-// CONFIG CLOUDINARY - reemplaza
 const CLOUD_NAME = 'TU_CLOUD_NAME';
 const UPLOAD_PRESET = 'armain_unsigned';
-
 const loginBox = document.getElementById('login-box');
 const panel = document.getElementById('panel');
-
-document.getElementById('login').onclick = async ()=>{
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
-  try{ await auth.signInWithEmailAndPassword(email, pass); }catch(e){ alert(e.message); }
-};
+document.getElementById('login').onclick = async ()=>{const e=document.getElementById('email').value;const p=document.getElementById('password').value;try{await auth.signInWithEmailAndPassword(e,p)}catch(err){alert(err.message)}};
 document.getElementById('logout').onclick = ()=>auth.signOut();
-
 auth.onAuthStateChanged(user=>{
-  if(user){ loginBox.style.display='none'; panel.style.display='block'; initAdmin(); }
-  else{ loginBox.style.display='block'; panel.style.display='none'; }
+  const sidebar = document.querySelector('.sidebar');
+  const layout = document.querySelector('.admin-layout');
+  if(user){loginBox.style.display='none';panel.style.display='block';sidebar.style.display='flex';layout.style.gridTemplateColumns='240px 1fr';initAdmin();}
+  else{loginBox.style.display='block';panel.style.display='none';sidebar.style.display='none';layout.style.gridTemplateColumns='1fr';}
 });
-
-function initAdmin(){
-  document.querySelectorAll('.sidebar nav button').forEach(b=>{
-    b.onclick = ()=>{ document.querySelectorAll('.tab').forEach(t=>t.style.display='none'); document.getElementById('tab-'+b.dataset.tab).style.display='block'; };
-  });
-  loadSlidesAdmin(); loadCatsAdmin(); loadProdsAdmin(); loadCatSelect();
-}
-
-// SLIDES
-async function uploadToCloudinary(file){
-  const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-  const fd = new FormData(); fd.append('file', file); fd.append('upload_preset', UPLOAD_PRESET);
-  const res = await fetch(url,{method:'POST',body:fd}); return res.json();
-}
-document.getElementById('upload-slide').onclick = async ()=>{
-  const f = document.getElementById('slide-file').files[0]; if(!f) return;
-  const up = await uploadToCloudinary(f);
-  await db.collection('slides').add({url: up.secure_url, orden: Date.now()});
-  loadSlidesAdmin();
-};
-async function loadSlidesAdmin(){
-  const snap = await db.collection('slides').orderBy('orden').get();
-  const box = document.getElementById('slides-list'); box.innerHTML='';
-  snap.forEach(doc=>{
-    const s=doc.data();
-    const div=document.createElement('div'); div.className='item';
-    div.innerHTML=`<img src="${s.url}"/><button data-id="${doc.id}">Eliminar</button>`;
-    div.querySelector('button').onclick=async()=>{ await db.collection('slides').doc(doc.id).delete(); loadSlidesAdmin(); };
-    box.appendChild(div);
-  });
-}
-
-// CATEGORIAS
-document.getElementById('add-cat').onclick = async ()=>{
-  const nombre = document.getElementById('cat-nombre').value;
-  const descripcion = document.getElementById('cat-desc').value;
-  if(!nombre) return;
-  await db.collection('categorias').add({nombre,descripcion});
-  loadCatsAdmin(); loadCatSelect();
-};
-async function loadCatsAdmin(){
-  const snap = await db.collection('categorias').get();
-  const box = document.getElementById('cats-list'); box.innerHTML='';
-  snap.forEach(d=>{ const c=d.data(); const div=document.createElement('div'); div.className='item'; div.innerHTML=`<strong>${c.nombre}</strong><p>${c.descripcion||''}</p>`; box.appendChild(div); });
-}
-async function loadCatSelect(){
-  const sel = document.getElementById('prod-cat'); sel.innerHTML='';
-  const snap = await db.collection('categorias').get();
-  snap.forEach(d=>{ const o=document.createElement('option'); o.value=d.id; o.textContent=d.data().nombre; sel.appendChild(o); });
-}
-
-// PRODUCTOS
-document.getElementById('add-prod').onclick = async ()=>{
-  const nombre = document.getElementById('prod-nombre').value;
-  const marca = document.getElementById('prod-marca').value;
-  const precio = Number(document.getElementById('prod-precio').value);
-  const cat = document.getElementById('prod-cat').value;
-  const desc = document.getElementById('prod-desc').value;
-  const notas = document.getElementById('prod-notas').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const file = document.getElementById('prod-imagen-file').files[0];
-  if(!nombre||!file) return alert('Completa nombre e imagen');
-  const up = await uploadToCloudinary(file);
-  await db.collection('productos').add({nombre,marca,precio,categoria:cat,descripcion:desc,notas,imagen:up.secure_url,creado:Date.now(),slug:nombre.toLowerCase().replace(/\s+/g,'-')});
-  alert('Producto guardado'); loadProdsAdmin();
-};
-async function loadProdsAdmin(){
-  const snap = await db.collection('productos').orderBy('creado','desc').get();
-  const box = document.getElementById('prods-list'); box.innerHTML='';
-  snap.forEach(d=>{ const p=d.data(); const div=document.createElement('div'); div.className='item'; div.innerHTML=`<img src="${p.imagen}"/><strong>${p.nombre}</strong><p>$${p.precio}</p><a href="producto.html?id=${d.id}" target="_blank">Ver página</a>`; box.appendChild(div); });
-}
-
-// ADMINS
-document.getElementById('add-admin').onclick = async ()=>{
-  const email = document.getElementById('new-admin-email').value;
-  const pass = document.getElementById('new-admin-pass').value;
-  try{
-    // Nota: crear usuarios desde cliente requiere segunda app o Cloud Functions. Aquí demo simple:
-    const secondary = firebase.initializeApp(firebase.app().options, 'secondary');
-    await secondary.auth().createUserWithEmailAndPassword(email, pass);
-    await secondary.auth().signOut();
-    alert('Administrador creado: '+email);
-  }catch(e){ alert('Error: '+e.message+' (recomendado usar Cloud Function)'); }
-};
+function initAdmin(){document.querySelectorAll('.sidebar nav button').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.tab').forEach(t=>t.style.display='none');document.getElementById('tab-'+b.dataset.tab).style.display='block'}});loadSlidesAdmin();loadCatsAdmin();loadProdsAdmin();loadCatSelect();}
+async function uploadToCloudinary(file){const url=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;const fd=new FormData();fd.append('file',file);fd.append('upload_preset',UPLOAD_PRESET);const r=await fetch(url,{method:'POST',body:fd});return r.json()}
+document.getElementById('upload-slide').onclick=async()=>{const f=document.getElementById('slide-file').files[0];if(!f)return;const up=await uploadToCloudinary(f);await db.collection('slides').add({url:up.secure_url,orden:Date.now()});loadSlidesAdmin()};
+async function loadSlidesAdmin(){const s=await db.collection('slides').orderBy('orden').get();const b=document.getElementById('slides-list');b.innerHTML='';s.forEach(d=>{const x=d.data();const i=document.createElement('div');i.innerHTML=`<img src="${x.url}" style="width:100%;height:120px;object-fit:cover;border-radius:8px"/><button onclick="db.collection('slides').doc('${d.id}').delete().then(loadSlidesAdmin)">Eliminar</button>`;b.appendChild(i)})}
+document.getElementById('add-cat').onclick=async()=>{const n=document.getElementById('cat-nombre').value;const d=document.getElementById('cat-desc').value;if(!n)return;await db.collection('categorias').add({nombre:n,descripcion:d});loadCatsAdmin();loadCatSelect()};
+async function loadCatsAdmin(){const s=await db.collection('categorias').get();const b=document.getElementById('cats-list');b.innerHTML='';s.forEach(d=>{const c=d.data();b.innerHTML+=`<div><strong>${c.nombre}</strong><p>${c.descripcion||''}</p></div>`})}
+async function loadCatSelect(){const sel=document.getElementById('prod-cat');sel.innerHTML='';const s=await db.collection('categorias').get();s.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.data().nombre;sel.appendChild(o)})}
+document.getElementById('add-prod').onclick=async()=>{const n=document.getElementById('prod-nombre').value;const m=document.getElementById('prod-marca').value;const p=Number(document.getElementById('prod-precio').value);const c=document.getElementById('prod-cat').value;const d=document.getElementById('prod-desc').value;const no=document.getElementById('prod-notas').value.split(',').map(s=>s.trim()).filter(Boolean);const f=document.getElementById('prod-imagen-file').files[0];if(!n||!f)return alert('Completa');const up=await uploadToCloudinary(f);await db.collection('productos').add({nombre:n,marca:m,precio:p,categoria:c,descripcion:d,notas:no,imagen:up.secure_url,creado:Date.now()});alert('Guardado');loadProdsAdmin()};
+async function loadProdsAdmin(){const s=await db.collection('productos').orderBy('creado','desc').get();const b=document.getElementById('prods-list');b.innerHTML='';s.forEach(d=>{const p=d.data();b.innerHTML+=`<div><img src="${p.imagen}" style="width:100%;height:100px;object-fit:cover"><strong>${p.nombre}</strong></div>`})}

@@ -18,9 +18,7 @@
     </div>
   </header>
 
-  <main class="container producto-page" id="producto-container">
-    <!-- contenido dinámico -->
-  </main>
+  <main class="container producto-page" id="producto-container"></main>
 
   <aside id="carrito" class="carrito">
     <div class="carrito-head"><h3>Tu carrito</h3><button id="cerrar-carrito">×</button></div>
@@ -40,30 +38,25 @@
     const id = params.get('id');
     const db = firebase.firestore();
     const container = document.getElementById('producto-container');
-
     async function load() {
-      if(!id) { container.innerHTML = '<p>Producto no encontrado</p>'; return; }
+      if(!id){container.innerHTML='<p>Producto no encontrado</p>';return;}
       const doc = await db.collection('productos').doc(id).get();
-      if(!doc.exists){ container.innerHTML = '<p>Producto no encontrado</p>'; return; }
-      const p = {id: doc.id, ...doc.data()};
+      if(!doc.exists){container.innerHTML='<p>Producto no encontrado</p>';return;}
+      const p = {id:doc.id,...doc.data()};
       document.title = p.nombre + ' — Armain';
-      // SEO meta
-      const meta = document.createElement('meta'); meta.name='description'; meta.content=p.descripcion?.slice(0,155)||''; document.head.appendChild(meta);
-      
       container.innerHTML = `
         <div class="prod-hero">
           <img src="${p.imagen}" alt="${p.nombre}"/>
           <div>
             <h1>${p.nombre}</h1>
             <p class="marca">${p.marca||''}</p>
-            <p class="precio">$${p.precio?.toLocaleString('es-AR')}</p>
+            <p class="precio">$${(p.precio||0).toLocaleString('es-AR')}</p>
             <p class="desc">${p.descripcion||''}</p>
             <div class="tags">${(p.notas||[]).map(n=>`<span>${n}</span>`).join('')}</div>
             <button class="btn-primary" onclick="addToCart('${p.id}','${p.nombre.replace(/'/g,"")}','${p.imagen}',${p.precio})">Añadir al carrito</button>
             <a class="btn-ghost" href="index.html">Seguir explorando</a>
           </div>
-        </div>
-      `;
+        </div>`;
     }
     load();
   </script>

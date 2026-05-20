@@ -1,4 +1,3 @@
-// Firebase Armain - configurado
 const firebaseConfig = {
   apiKey: "AIzaSyBxqTxgTiGrd1AK50fIZVHn_INJX9yKSDo",
   authDomain: "armain-84b7d.firebaseapp.com",
