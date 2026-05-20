@@ -38,3 +38,13 @@ h2{font-family:'Playfair Display',serif;color:var(--azul);margin:30px 0 18px;fon
 .prod-detail button{background:var(--azul);color:var(--beige);border:none;padding:14px 20px;border-radius:12px;cursor:pointer;font-size:16px}
 .volver{display:inline-block;margin-top:14px;color:var(--azul)}
 @media(max-width:900px){.prod-detail{grid-template-columns:1fr}}
+
+
+/* LOADER FULLSCREEN */
+#loader{position:fixed;inset:0;background:#0B1F3A;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s}
+#loader.hide{opacity:0;pointer-events:none}
+.loader-logo{width:min(80vw,600px);height:min(60vh,400px);background:url('../assets/loader-desktop.jpg') center/contain no-repeat}
+.loader-bar{width:min(60vw,320px);height:4px;background:rgba(245,233,214,.2);border-radius:4px;overflow:hidden;margin-top:24px}
+.loader-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#C9A86B,#F5E9D6);animation:load 2.8s ease-in-out forwards}
+@keyframes load{to{width:100%}}
+@media(max-width:768px){.loader-logo{background-image:url('../assets/loader-mobile.jpg');width:80vw;height:70vh}}
