@@ -2,21 +2,22 @@
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Armain - Perfumería Premium</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
+<div id="loader"><div class="loader-bg"></div><div class="loader-bar"><span></span></div></div>
 <header class="header">
   <div class="logo">Armain<span>PERFUMERIA</span></div>
   <nav><button id="abrir-carrito">Carrito (<span id="cart-count">0</span>)</button></nav>
 </header>
 <section id="hero" class="hero"></section>
 <main class="container">
-  <h2>Categorías</h2>
+  <h2 class="section-title">Categorías Exclusivas</h2>
   <div id="categorias" class="grid cat-grid"></div>
-  <h2>Perfumes Destacados</h2>
+  <h2 class="section-title">Selección Premium</h2>
   <div id="productos" class="grid prod-grid"></div>
 </main>
 <aside id="carrito" class="carrito">
@@ -24,6 +25,7 @@
   <div id="carrito-items"></div>
   <div class="carrito-foot"><strong>Total: $<span id="carrito-total">0</span> ARS</strong><button id="checkout">Finalizar compra</button></div>
 </aside>
+<footer class="footer">© 2025 Armain - Perfumería de Nicho Argentina</footer>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
