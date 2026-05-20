@@ -1,71 +1,38 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Producto — Armain</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/estilos.css"/>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto - Armain</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="container">
-      <a class="brand" href="index.html">ARMAIN</a>
-      <nav>
-        <a href="index.html#productos">Volver</a>
-        <button id="btn-carrito">Carrito (<span id="cart-count">0</span>)</button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container producto-page" id="producto-container">
-    <!-- contenido dinámico -->
-  </main>
-
-  <aside id="carrito" class="carrito">
-    <div class="carrito-head"><h3>Tu carrito</h3><button id="cerrar-carrito">×</button></div>
-    <div id="carrito-items"></div>
-    <div class="carrito-foot">
-      <div class="total">Total: <span id="cart-total">$0</span></div>
-      <button class="btn-primary" id="checkout">Finalizar compra</button>
-    </div>
-  </aside>
-
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
-  <script src="js/carrito.js"></script>
-  <script>
-    const params = new URLSearchParams(location.search);
-    const id = params.get('id');
-    const db = firebase.firestore();
-    const container = document.getElementById('producto-container');
-
-    async function load() {
-      if(!id) { container.innerHTML = '<p>Producto no encontrado</p>'; return; }
-      const doc = await db.collection('productos').doc(id).get();
-      if(!doc.exists){ container.innerHTML = '<p>Producto no encontrado</p>'; return; }
-      const p = {id: doc.id, ...doc.data()};
-      document.title = p.nombre + ' — Armain';
-      // SEO meta
-      const meta = document.createElement('meta'); meta.name='description'; meta.content=p.descripcion?.slice(0,155)||''; document.head.appendChild(meta);
-      
-      container.innerHTML = `
-        <div class="prod-hero">
-          <img src="${p.imagen}" alt="${p.nombre}"/>
-          <div>
-            <h1>${p.nombre}</h1>
-            <p class="marca">${p.marca||''}</p>
-            <p class="precio">$${p.precio?.toLocaleString('es-AR')}</p>
-            <p class="desc">${p.descripcion||''}</p>
-            <div class="tags">${(p.notas||[]).map(n=>`<span>${n}</span>`).join('')}</div>
-            <button class="btn-primary" onclick="addToCart('${p.id}','${p.nombre.replace(/'/g,"")}','${p.imagen}',${p.precio})">Añadir al carrito</button>
-            <a class="btn-ghost" href="index.html">Seguir explorando</a>
-          </div>
-        </div>
-      `;
-    }
-    load();
-  </script>
+<header class="header"><a href="index.html" class="logo">Armain<span>PERFUMERIA</span></a></header>
+<main class="container producto-page" id="producto-detalle">Cargando...</main>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/carrito.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
+db.collection('productos').doc(id).get().then(doc=>{
+  if(!doc.exists){document.getElementById('producto-detalle').innerHTML='<p>Producto no encontrado</p>';return}
+  const p=doc.data();
+  document.title = p.nombre + ' - Armain';
+  document.getElementById('producto-detalle').innerHTML = `
+    <div class="prod-detail">
+      <img src="${p.imagen}" alt="${p.nombre}">
+      <div>
+        <h1>${p.nombre}</h1>
+        <p class="marca">${p.marca||''}</p>
+        <p class="precio">$${p.precio} ARS</p>
+        <p>${p.descripcion||''}</p>
+        <button onclick="agregarAlCarrito('${doc.id}','${p.nombre}',${p.precio},'${p.imagen}')">Añadir al carrito</button>
+        <a href="index.html" class="volver">← Volver</a>
+      </div>
+    </div>`;
+});
+</script>
 </body>
 </html>

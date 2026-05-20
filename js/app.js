@@ -1,4 +1,3 @@
-window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader')?.classList.add('hide')},2800)});
 const hero=document.getElementById('hero');
 db.collection('slides').orderBy('orden').onSnapshot(s=>{hero.innerHTML='';let i=0;s.forEach(d=>{const div=document.createElement('div');div.className='slide'+(i===0?' active':'');div.style.backgroundImage=`url(${d.data().url})`;hero.appendChild(div);i++});if(i>1)setInterval(()=>{const slides=[...document.querySelectorAll('.slide')];const a=document.querySelector('.slide.active');let n=a.nextElementSibling||slides[0];a.classList.remove('active');n.classList.add('active')},5000)});
 db.collection('categorias').onSnapshot(s=>{const c=document.getElementById('categorias');c.innerHTML='';s.forEach(d=>{const cat=d.data();c.innerHTML+=`<div class="card" onclick="filtrar('${d.id}')"><div class="info"><h3>${cat.nombre}</h3><p>${cat.descripcion||''}</p></div></div>`})});
