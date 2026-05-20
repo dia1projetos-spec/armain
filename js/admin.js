@@ -1,6 +1,6 @@
 const auth = firebase.auth();
 const db = firebase.firestore();
-const CLOUD_NAME = 'TU_CLOUD_NAME';
+const CLOUD_NAME = 'dlizw7yxk';
 const UPLOAD_PRESET = 'armain_unsigned';
 const loginBox = document.getElementById('login-box');
 const panel = document.getElementById('panel');
@@ -12,7 +12,7 @@ auth.onAuthStateChanged(user=>{
   if(user){loginBox.style.display='none';panel.style.display='block';sidebar.style.display='flex';layout.style.gridTemplateColumns='240px 1fr';initAdmin();}
   else{loginBox.style.display='block';panel.style.display='none';sidebar.style.display='none';layout.style.gridTemplateColumns='1fr';}
 });
-function initAdmin(){document.querySelectorAll('.sidebar nav button').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.tab').forEach(t=>t.style.display='none');document.getElementById('tab-'+b.dataset.tab).style.display='block'}});loadSlidesAdmin();loadCatsAdmin();loadProdsAdmin();loadCatSelect();}
+function initAdmin(){document.querySelectorAll('.sidebar nav button').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.sidebar button').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.style.display='none');document.getElementById('tab-'+b.dataset.tab).style.display='block'}});loadSlidesAdmin();loadCatsAdmin();loadProdsAdmin();loadCatSelect();}
 async function uploadToCloudinary(file){const url=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;const fd=new FormData();fd.append('file',file);fd.append('upload_preset',UPLOAD_PRESET);const r=await fetch(url,{method:'POST',body:fd});return r.json()}
 document.getElementById('upload-slide').onclick=async()=>{const f=document.getElementById('slide-file').files[0];if(!f)return;const up=await uploadToCloudinary(f);await db.collection('slides').add({url:up.secure_url,orden:Date.now()});loadSlidesAdmin()};
 async function loadSlidesAdmin(){const s=await db.collection('slides').orderBy('orden').get();const b=document.getElementById('slides-list');b.innerHTML='';s.forEach(d=>{const x=d.data();const i=document.createElement('div');i.innerHTML=`<img src="${x.url}" style="width:100%;height:120px;object-fit:cover;border-radius:8px"/><button onclick="db.collection('slides').doc('${d.id}').delete().then(loadSlidesAdmin)">Eliminar</button>`;b.appendChild(i)})}
